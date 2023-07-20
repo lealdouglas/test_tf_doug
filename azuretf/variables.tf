@@ -13,6 +13,11 @@ variable "region_code" {
   default = "br"
 }
 
+variable "envv" {
+  type    = string
+  default = "dev"
+}
+
 variable "tags" {
   type = map(any)
   default = {
