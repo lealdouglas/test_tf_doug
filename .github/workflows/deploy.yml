@@ -61,12 +61,12 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-
-      - name: Terraform Workspace
-        id: workspace
-        run: terraform workspace select dev
   
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color -var "envv=${{vars.ENVV}}"
         continue-on-error: true
+
+      - run: echo ${{ steps.plan.outputs.stdout }}
+      - run: echo ${{ steps.plan.outputs.stderr }}
+      - run: echo ${{ steps.plan.outputs.exitcode }}
