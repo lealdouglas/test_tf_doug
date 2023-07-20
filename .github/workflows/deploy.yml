@@ -25,3 +25,42 @@ jobs:
           name: azuretf
           path: ${{ github.workspace }}//azuretf
       
+  deploy-dev-infra:
+    name: Deploy Infra Dev
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}//azuretf
+
+    environment:
+      name: dev
+
+    needs: build
+    steps:
+      - name: Download Terraform
+        uses: actions/download-artifct@v2
+        with: 
+          name: azuretf
+          path: ${{ github.workspace }}//azuretf
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+    
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Workspace
+        id: workspace
+        run: terraform workspace select dev
+  
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
