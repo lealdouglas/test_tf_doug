@@ -68,5 +68,4 @@ jobs:
         continue-on-error: true
           
       - name: Terraform Apply
-        id: apply
         run: terraform apply -auto-aprove -color -var "envv=${{vars.ENVV}}"
