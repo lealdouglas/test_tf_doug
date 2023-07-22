@@ -1,14 +1,14 @@
 variable "project_code" {
   type    = string
-  default = "datamasterdoug"
+  default = "dtmasterdoug"
 }
 
-variable "region" {
+variable "location" {
   type    = string
   default = "Brazil South"
 }
 
-variable "region_code" {
+variable "location_code" {
   type    = string
   default = "br"
 }
@@ -21,7 +21,7 @@ variable "envv" {
 variable "tags" {
   type = map(any)
   default = {
-    projectCode = "datamasterdoug"
+    projectCode = "dtmasterdoug"
     application = "data-master"
     costCenter  = "doug"
   }

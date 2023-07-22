@@ -26,7 +26,7 @@ provider "azurerm" {
 # Create a resource group
 resource "azurerm_resource_group" "rsg" {
   name     = "rsg${local.suffix_concat}"
-  location = var.region
+  location = var.location
   tags     = local.tags
 
 }
@@ -35,7 +35,7 @@ resource "azurerm_resource_group" "rsg" {
 resource "azurerm_storage_account" "sta" {
   name                      = "sta${local.suffix_concat}"
   resource_group_name       = azurerm_resource_group.rsg.name
-  location                  = var.region
+  location                  = var.location
   account_tier              = "Standard"
   account_replication_type  = "LRS"
   account_kind              = "StorageV2"
@@ -50,18 +50,18 @@ resource "azurerm_storage_account" "sta" {
 resource "azurerm_service_plan" "src" {
   name                = "src${local.suffix_concat}"
   resource_group_name = azurerm_resource_group.rsg.name
-  location            = var.region
+  location            = var.location
   os_type             = "Linux"
   sku_name            = "F1"
 }
 
 resource "azurerm_linux_function_app" "fnc" {
-  name                        = "fct${local.suffix_concat}"
-  resource_group_name         = azurerm_resource_group.rsg.name
-  location                    = var.region
-  service_plan_id             = azurerm_service_plan.src.id
-  storage_account_name        = azurerm_storage_account.sta.name
-  storage_key_vault_secret_id = azurerm_storage_account.sta.primary_access_key
+  name                 = "fnc${local.suffix_concat}"
+  resource_group_name  = azurerm_resource_group.rsg.name
+  location             = var.location
+  storage_account_name = azurerm_storage_account.sta.name
+  service_plan_id      = azurerm_service_plan.src.id
+
 
   site_config {
   }
