@@ -47,7 +47,7 @@ resource "azurerm_storage_account" "sta" {
 }
 
 
-resource "azurerm_service_plan" "spl" {
+resource "azurerm_service_plan" "src" {
   name                = "src${local.suffix_concat}"
   resource_group_name = azurerm_resource_group.rsg.name
   location            = var.region
@@ -59,7 +59,7 @@ resource "azurerm_linux_function_app" "fnc" {
   name                        = "fct${local.suffix_concat}"
   resource_group_name         = azurerm_resource_group.rsg.name
   location                    = var.region
-  service_plan_id             = azurerm_service_plan.spl.id
+  service_plan_id             = azurerm_service_plan.src.id
   storage_account_name        = azurerm_storage_account.sta.name
   storage_key_vault_secret_id = azurerm_storage_account.sta.primary_access_key
 
