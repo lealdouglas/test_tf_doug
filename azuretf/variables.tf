@@ -1,6 +1,6 @@
 variable "project_code" {
   type    = string
-  default = "dougtf"
+  default = "datamasterdoug"
 }
 
 variable "region" {
@@ -21,8 +21,8 @@ variable "envv" {
 variable "tags" {
   type = map(any)
   default = {
-    projectCode = "doug-tf"
-    application = "data-plataform"
+    projectCode = "datamasterdoug"
+    application = "data-master"
     costCenter  = "doug"
   }
 }

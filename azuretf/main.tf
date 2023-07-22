@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.0.0"
+      version = "=3.66.0"
     }
   }
 
@@ -47,24 +47,22 @@ resource "azurerm_storage_account" "sta" {
 }
 
 
-# resource "azurerm_service_plan" "spl" {
-#   name                = "spl${local.suffix_concat}"
-#   resource_group_name = azurerm_resource_group.rsg.name
-#   location            = var.region
-#   os_type             = "Linux"
-#   sku_name            = "F1"
-# }
+resource "azurerm_service_plan" "spl" {
+  name                = "src${local.suffix_concat}"
+  resource_group_name = azurerm_resource_group.rsg.name
+  location            = var.region
+  os_type             = "Linux"
+  sku_name            = "F1"
+}
 
-# resource "azurerm_linux_function_app" "fnc" {
-#   name                = "fnc${local.suffix_concat}"
-#   resource_group_name = azurerm_resource_group.rsg.name
-#   location            = var.region
+resource "azurerm_linux_function_app" "fnc" {
+  name                        = "fct${local.suffix_concat}"
+  resource_group_name         = azurerm_resource_group.rsg.name
+  location                    = var.region
+  service_plan_id             = azurerm_service_plan.spl.id
+  storage_account_name        = azurerm_storage_account.sta.name
+  storage_key_vault_secret_id = azurerm_storage_account.sta.primary_access_key
 
-#   storage_account_name       = azurerm_storage_account.sta.name
-#   storage_account_access_key = azurerm_storage_account.sta.primary_access_key
-#   service_plan_id            = azurerm_service_plan.spl.id
-
-#   site_config {
-
-#   }
-# }
+  site_config {
+  }
+}
